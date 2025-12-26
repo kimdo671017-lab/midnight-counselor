@@ -1838,48 +1838,47 @@ def main():
                 padding-top: 3.5rem !important;
             }
 
-@media (max-width: 768px) {
-    /* 1. 사라진 버튼(collapsedControl) 강제 소환 및 스타일링 */
-    [data-testid="collapsedControl"] {
-        display: block !important;        /* 숨겨진 거 취소 */
-        visibility: visible !important;   /* 보이게 설정 */
-        
-        position: fixed !important;       /* 위치 고정 */
-        top: 15px !important;             /* 위에서 15px */
-        left: 15px !important;            /* 왼쪽에서 15px */
-        z-index: 1000002 !important;      /* 화면 맨 위로 */
-        
-        /* 버튼이 검은 배경에 묻히지 않게 '흰색 박스'로 만들기 */
-        background-color: white !important; 
-        padding: 5px !important;
-        border-radius: 8px !important;
-        color: black !important;          /* 화살표 아이콘 색상 */
-        width: auto !important;
-        height: auto !important;
-    }
-
-    /* 2. (중요) 사이드바 동작 로직 (이게 없으면 버튼 눌러도 반응 안 함) */
+/* 1. 숨겨진 진짜 버튼(collapsedControl) 강제 소환 */
+[data-testid="collapsedControl"] {
+    display: block !important;        /* none을 block으로 덮어씀 */
+    visibility: visible !important;   /* 보이게 함 */
     
-    /* 닫혀있을 때: 사이드바 숨기기 */
-    [data-testid="stSidebar"][aria-expanded="false"] {
-        margin-left: -160px !important; /* 왼쪽 화면 밖으로 */
-    }
-
-    /* 열려있을 때: 사이드바 보이기 */
-    [data-testid="stSidebar"][aria-expanded="true"] {
-        margin-left: 0 !important;
-        width: 150px !important;
-        position: fixed !important;
-        z-index: 1000001 !important;
-    }
+    /* 위치를 화면 왼쪽 위로 강제 고정 */
+    position: fixed !important;
+    top: 15px !important;
+    left: 15px !important;
     
-    /* 열려있을 때 버튼 위치: 사이드바 옆으로 이동 */
-    [data-testid="stSidebar"][aria-expanded="true"] + [data-testid="collapsedControl"],
-    body:has([data-testid="stSidebar"][aria-expanded="true"]) [data-testid="collapsedControl"] {
-        left: 160px !important; /* 사이드바(150px) + 여유(10px) */
-        background-color: transparent !important; /* 열리면 배경 투명하게 (취향껏) */
-        color: white !important; /* 열리면 아이콘 흰색으로 (취향껏) */
-    }
+    /* 크기 확보 */
+    width: 40px !important;
+    height: 40px !important;
+    
+    /* 다른 모든 요소보다 위에 오도록 (제일 중요) */
+    z-index: 1000000 !important; 
+    
+    /* 배경색을 줘서 눈에 띄게 만듦 */
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 50% !important;
+}
+
+/* 2. 버튼 모양을 '☰' (햄버거 메뉴)로 강제 변경 */
+/* 기존 화살표 아이콘이 꼴보기 싫으시다고 했으니 텍스트로 덮어씌웁니다 */
+[data-testid="collapsedControl"]::before {
+    content: "☰" !important;    /* 메뉴 아이콘 */
+    font-size: 30px !important;
+    color: white !important;      /* 검은 배경이니 흰색 글씨 */
+    
+    /* 중앙 정렬 */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 3. (선택사항) 헷갈리게 하는 파란색 물음표[?] 이미지 숨기기 */
+/* 그 물음표가 뭔지 정확히 모르겠으나, 맨 위에 있는 이미지라면 이걸로 숨겨질 겁니다 */
+.stImage {
+    pointer-events: none !important; /* 이미지를 눌러도 확대 안 되게 막음 */
 }
 
         </style>
