@@ -1838,45 +1838,75 @@ def main():
                 padding-top: 3.5rem !important;
             }
 
-/* 사이드바 버튼: '목차' 텍스트로 교체 */
-[data-testid="collapsedControl"] {
-    /* 1. 버튼 위치 및 기본 설정 */
-    display: block !important;
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
-    z-index: 1000000 !important;
-    
-    /* 2. 기존의 이상한 영어 글씨("keyboard...") 강제로 숨기기 */
-    visibility: hidden !important; /* 부모를 숨김 */
-    
-    /* 3. 버튼 모양 (글자가 들어갈 배경) */
-    width: auto !important;         /* 글자 길이에 맞게 */
-    height: 34px !important;        /* 적당한 높이 */
-    background-color: rgba(255, 255, 255, 0.2) !important; /* 반투명 배경 */
-    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* 얇은 테두리 */
-    border-radius: 12px !important; /* 둥근 모서리 */
-    padding: 0 12px !important;     /* 좌우 여백 */
-}
+@media (max-width: 768px) {
+    /* 1. 사이드바 동작 설정 (열고 닫기 확실하게) */
+    [data-testid="stSidebar"] {
+        width: 150px !important;
+        min-width: 150px !important;
+        transition: margin-left 0.3s ease !important;
+        z-index: 99999 !important;
+    }
 
-/* 4. '목차' 글씨 새로 새겨넣기 */
-[data-testid="collapsedControl"]::after {
-    content: "목차" !important;    /* 여기에 원하는 단어 입력 */
+    /* 닫혀있을 때: 화면 왼쪽 밖으로 숨김 */
+    [data-testid="stSidebar"][aria-expanded="false"] {
+        margin-left: -150px !important;
+    }
+
+    /* 열려있을 때: 화면에 표시 */
+    [data-testid="stSidebar"][aria-expanded="true"] {
+        margin-left: 0 !important;
+        position: fixed !important;
+        left: 0 !important;
+    }
+
+    /* 2. 본문 밀기 (사이드바 열리면 본문도 밀림) */
+    body:has([data-testid="stSidebar"][aria-expanded="true"]) .main .block-container {
+        padding-left: 170px !important;
+        padding-right: 10px !important;
+    }
     
-    /* 숨겨진 부모 속에서 이 녀석만 다시 보이게 함 */
-    visibility: visible !important; 
-    
-    /* 글자 스타일 */
-    font-size: 14px !important;
-    font-weight: bold !important;
-    color: #ffffff !important;      /* 흰색 글씨 */
-    
-    /* 버튼 중앙에 위치 잡기 */
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    white-space: nowrap !important; /* 줄바꿈 방지 */
+    body:has([data-testid="stSidebar"][aria-expanded="false"]) .main .block-container {
+        padding-left: 20px !important; /* 닫히면 다시 넓게 */
+        padding-right: 20px !important;
+    }
+
+    /* 3. [목차] 버튼 만들기 (영어 글씨 완벽 제거 버전) */
+    [data-testid="collapsedControl"] {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        visibility: visible !important;
+        position: fixed !important;
+        top: 15px !important;
+        left: 15px !important;
+        z-index: 1000000 !important;
+        
+        /* 버튼 스타일 */
+        width: auto !important;
+        height: 36px !important;
+        padding: 0 15px !important;
+        background-color: rgba(60, 60, 60, 0.8) !important; /* 배경을 좀 더 진하게 */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 20px !important;
+        
+        /* 혹시 모를 글자 색상 투명화 */
+        color: transparent !important;
+    }
+
+    /* ★ 핵심: 버튼 안에 있는 원래 아이콘/글자(svg, span 등)를 아예 렌더링 안 함 */
+    [data-testid="collapsedControl"] > * {
+        display: none !important;
+    }
+
+    /* 4. '목차' 글씨 심기 */
+    [data-testid="collapsedControl"]::after {
+        content: "목차" !important;
+        display: block !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        color: #ffffff !important; /* 글자색 흰색 */
+        visibility: visible !important;
+    }
 }
 
         </style>
