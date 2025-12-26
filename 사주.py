@@ -1837,6 +1837,19 @@ def main():
             .block-container {
                 padding-top: 3.5rem !important;
             }
+/* 모바일에서 사이드바(목차)가 자동으로 숨겨지는 걸 막고 항상 보여줌 */
+    @media (max-width: 768px) {
+        [data-testid="stSidebar"] {
+            transform: none !important;
+            visibility: visible !important;
+            display: block !important;
+            width: 300px !important; /* 모바일에서 적절한 목차 너비 */
+        }
+        /* 사이드바를 여닫는 화살표 버튼을 숨겨서 항상 열린 상태로 고정 */
+        [data-testid="collapsedControl"] {
+            display: none !important;
+        }
+    }
         </style>
     """, unsafe_allow_html=True)
     # 2. 사이드바 메뉴 구성 (사용자님이 짠 코드!)
