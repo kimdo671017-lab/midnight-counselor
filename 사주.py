@@ -18,85 +18,96 @@ st.markdown("""
     <style>
     /* 전체 배경색과 기본 글자색 설정 */
     .stApp {
-        background-color: #121212; /* 아주 어두운 밤색 */
+        background-color: #121212 !important; 
     }
     .main { 
-        color: #e0e0e0; /* 밝은 회색 글자 */
-        font-family: 'Pretendard', sans-serif; 
+        color: #e0e0e0 !important; 
+        font-family: 'Pretendard', sans-serif !important; 
     }
     
     /* 텍스트 가독성 최적화 */
     .report-content {
-        font-size: 1.05rem; 
-        line-height: 2.1; 
-        color: #cfd8dc; /* 본문용 밝은 회색 */
-        word-break: keep-all; 
-        white-space: pre-wrap; 
-        margin-bottom: 40px;
-        letter-spacing: -0.02em;
-        text-align: justify;
+        font-size: 1.05rem !important; 
+        line-height: 2.1 !important; 
+        color: #cfd8dc !important; 
+        word-break: keep-all !important; 
+        white-space: pre-wrap !important; 
+        margin-bottom: 40px !important;
+        letter-spacing: -0.02em !important;
+        text-align: justify !important;
     }
     
     /* 카드 디자인: 어두운 배경에 살짝 밝은 카드 */
     .report-card {
-        padding: 30px; 
-        background-color: #1e1e1e; 
-        border-radius: 15px;
-        border: 1px solid #333;
-        margin-bottom: 20px;
+        padding: 30px !important; 
+        background-color: #1e1e1e !important; 
+        border-radius: 15px !important;
+        border: 1px solid #333 !important;
+        margin-bottom: 20px !important;
     }
     
     /* 섹션 제목 */
     .report-title {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #ffffff; /* 순백색 */
-        margin-bottom: 20px;
-        letter-spacing: -0.5px;
+        font-size: 1.5rem !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+        margin-bottom: 20px !important;
+        letter-spacing: -0.5px !important;
     }
     
-    /* 키워드 태그 */
+    /* 키워드 박스 및 태그 */
     .keyword-box {
-        text-align: center;
-        margin-bottom: 50px;
-        padding-bottom: 20px;
+        text-align: center !important;
+        margin-bottom: 50px !important;
+        padding-bottom: 20px !important;
     }
     .keyword-tag {
-        display: inline-block;
-        padding: 8px 16px;
-        margin: 4px;
-        background-color: #37474f; /* 태그 배경도 어둡게 */
-        color: #eceff1;
-        border-radius: 20px;
-        font-size: 0.95rem;
-        font-weight: 600;
+        display: inline-block !important;
+        padding: 8px 16px !important;
+        margin: 4px !important;
+        background-color: #37474f !important;
+        color: #eceff1 !important;
+        border-radius: 20px !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
     }
     
-    /* 강조 하이라이트: 글자는 흰색으로 유지하되 배경만 은은하게 깔기 */
+    /* 강조 하이라이트 */
     .highlight {
-        background: linear-gradient(to top, rgba(255, 255, 255, 0.2) 40%, transparent 40%);
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.2) 40%, transparent 40%) !important;
         color: #ffffff !important;
-        font-weight: 800;
-        padding: 0 2px;
-        border-radius: 2px;
-    }
-    /* 조언 박스 */
-    .advice-box {
-        background-color: #263238;
-        border-radius: 8px;
-        padding: 40px;
-        margin-top: 60px;
-        margin-bottom: 40px;
-        color: #cfd8dc;
-        border-left: 4px solid #78909c;
+        font-weight: 800 !important;
+        padding: 0 2px !important;
+        border-radius: 2px !important;
     }
 
-    /* 버튼 디자인 */
-    .stButton>button { 
-        width: 100%; border-radius: 12px; height: 4.5em; font-weight: 700; font-size: 1.1rem;
-        background-color: #4527a0; border: none; color: #ffffff; transition: 0.3s;
+    /* 조언 박스 */
+    .advice-box {
+        background-color: #263238 !important;
+        border-radius: 8px !important;
+        padding: 40px !important;
+        margin-top: 60px !important;
+        margin-bottom: 40px !important;
+        color: #cfd8dc !important;
+        border-left: 4px solid #78909c !important;
     }
-    .stButton>button:hover { background-color: #5e35b1; color: #ffffff; }
+
+    /* 버튼 디자인 (최종 검정색 버전) */
+    .stButton>button { 
+        width: 100% !important; 
+        border-radius: 12px !important; 
+        height: 4.5em !important; 
+        font-weight: 700 !important; 
+        font-size: 1.1rem !important;
+        background-color: #4527a0 !important; 
+        border: none !important; 
+        color: #ffffff !important; 
+        transition: 0.3s !important;
+    }
+    .stButton>button:hover { 
+        background-color: #5e35b1 !important; 
+        color: #ffffff !important; 
+    }
     
     /* 입력창 라벨 색상 */
     label, .stMarkdown p {
@@ -105,12 +116,12 @@ st.markdown("""
 
     /* 마무리 멘트 */
     .closing-text {
-        text-align: center;
-        color: #868e96;
-        font-size: 0.95rem;
-        margin-top: 80px;
-        margin-bottom: 60px;
-        letter-spacing: 1px;
+        text-align: center !important;
+        color: #868e96 !important;
+        font-size: 0.95rem !important;
+        margin-top: 80px !important;
+        margin-bottom: 60px !important;
+        letter-spacing: 1px !important;
     }
 
     .stButton>button { 
@@ -118,6 +129,7 @@ st.markdown("""
         background-color: #212529; border: none; color: #ffffff; transition: 0.3s;
     }
     .stButton>button:hover { background-color: #495057; color: #ffffff; }
+
     </style>
     """, unsafe_allow_html=True)
 
