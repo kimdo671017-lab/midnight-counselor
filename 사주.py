@@ -16,20 +16,23 @@ st.set_page_config(
 # 스타일 부분 수정
 st.markdown("""
     <style>
-    /* 전체 배경색과 기본 글자색 설정 */
-    .stApp {
-        background-color: #121212 !important; 
+    /* 1. 스트림릿 표준 다크 최적화 배경 설정 */
+    /* 배경이 회색으로 뜨는 걸 막기 위해 가장 안정적인 다크 hex값(#0E1117) 기반으로 네 밤색을 맞췄어 */
+    .stApp, [data-testid="stSidebar"], [data-testid="stHeader"], .st-emotion-cache-6qob1r {
+        background-color: #0E1117 !important;
     }
-    .main { 
-        color: #e0e0e0 !important; 
-        font-family: 'Pretendard', sans-serif !important; 
+
+    /* 2. 글자색 및 폰트 (어느 환경에서도 가독성이 유지되는 밝은 회색) */
+    .main, p, span, label, [data-testid="stWidgetLabel"] p {
+        color: #FAFAFA !important;
+        font-family: 'Pretendard', sans-serif !important;
     }
     
-    /* 텍스트 가독성 최적화 */
+    /* 3. 리포트 본문 설정 (네 원본 수치 유지) */
     .report-content {
         font-size: 1.05rem !important; 
         line-height: 2.1 !important; 
-        color: #cfd8dc !important; 
+        color: #E0E0E0 !important; 
         word-break: keep-all !important; 
         white-space: pre-wrap !important; 
         margin-bottom: 40px !important;
@@ -37,91 +40,59 @@ st.markdown("""
         text-align: justify !important;
     }
     
-    /* 카드 디자인: 어두운 배경에 살짝 밝은 카드 */
+    /* 4. 카드 디자인 (배포 환경에서 가장 선명하게 보이는 다크 카드색) */
     .report-card {
         padding: 30px !important; 
-        background-color: #1e1e1e !important; 
+        background-color: #161B22 !important; 
         border-radius: 15px !important;
-        border: 1px solid #333 !important;
+        border: 1px solid #30363D !important;
         margin-bottom: 20px !important;
     }
     
-    /* 섹션 제목 */
+    /* 5. 섹션 제목 및 키워드 태그 */
     .report-title {
         font-size: 1.5rem !important;
         font-weight: 800 !important;
-        color: #ffffff !important;
+        color: #FFFFFF !important;
         margin-bottom: 20px !important;
-        letter-spacing: -0.5px !important;
     }
-    
-    /* 키워드 박스 및 태그 */
-    .keyword-box {
-        text-align: center !important;
-        margin-bottom: 50px !important;
-        padding-bottom: 20px !important;
-    }
+    .keyword-box { text-align: center !important; margin-bottom: 50px !important; padding-bottom: 20px !important; }
     .keyword-tag {
-        display: inline-block !important;
-        padding: 8px 16px !important;
-        margin: 4px !important;
-        background-color: #37474f !important;
-        color: #eceff1 !important;
-        border-radius: 20px !important;
-        font-size: 0.95rem !important;
-        font-weight: 600 !important;
+        display: inline-block !important; padding: 8px 16px !important; margin: 4px !important;
+        background-color: #21262D !important; color: #C9D1D9 !important;
+        border-radius: 20px !important; font-size: 0.95rem !important; font-weight: 600 !important;
     }
     
-    /* 강조 하이라이트 */
+    /* 6. 강조 하이라이트 및 조언 박스 */
     .highlight {
-        background: linear-gradient(to top, rgba(255, 255, 255, 0.2) 40%, transparent 40%) !important;
-        color: #ffffff !important;
-        font-weight: 800 !important;
-        padding: 0 2px !important;
-        border-radius: 2px !important;
+        background: linear-gradient(to top, rgba(88, 51, 238, 0.3) 40%, transparent 40%) !important;
+        color: #FFFFFF !important; font-weight: 800 !important; padding: 0 2px !important; border-radius: 2px !important;
     }
-
-    /* 조언 박스 */
     .advice-box {
-        background-color: #263238 !important;
-        border-radius: 8px !important;
-        padding: 40px !important;
-        margin-top: 60px !important;
-        margin-bottom: 40px !important;
-        color: #cfd8dc !important;
-        border-left: 4px solid #78909c !important;
+        background-color: #0D1117 !important; border-radius: 8px !important; padding: 40px !important;
+        margin-top: 60px !important; margin-bottom: 40px !important;
+        color: #C9D1D9 !important; border-left: 4px solid #5833EE !important;
     }
 
-    /* 버튼 디자인 (최종 검정색 버전) */
+    /* 7. 버튼 디자인 (네가 고른 보라색 #4527a0이 가장 선명하게 보이는 코드) */
     .stButton>button { 
-        width: 100% !important; 
-        border-radius: 12px !important; 
-        height: 4.5em !important; 
-        font-weight: 700 !important; 
-        font-size: 1.1rem !important;
-        background-color: #4527a0 !important; 
-        border: none !important; 
-        color: #ffffff !important; 
+        width: 100% !important; border-radius: 12px !important; height: 4.5em !important; 
+        font-weight: 700 !important; font-size: 1.1rem !important;
+        background-color: #4527a0 !important; border: none !important; color: #ffffff !important; 
         transition: 0.3s !important;
     }
     .stButton>button:hover { 
-        background-color: #5e35b1 !important; 
-        color: #ffffff !important; 
+        background-color: #5e35b1 !important; color: #ffffff !important;
     }
-    
+
     /* 입력창 라벨 색상 */
     label, .stMarkdown p {
         color: #e0e0e0 !important;
-    }
 
-    /* 마무리 멘트 */
+    /* 8. 마무리 멘트 */
     .closing-text {
-        text-align: center !important;
-        color: #868e96 !important;
-        font-size: 0.95rem !important;
-        margin-top: 80px !important;
-        margin-bottom: 60px !important;
-        letter-spacing: 1px !important;
+        text-align: center !important; color: #8B949E !important;
+        font-size: 0.95rem !important; margin-top: 80px !important; margin-bottom: 60px !important; letter-spacing: 1px !important;
     }
 
     .stButton>button { 
