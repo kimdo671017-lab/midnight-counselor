@@ -1837,17 +1837,33 @@ def main():
             .block-container {
                 padding-top: 3.5rem !important;
             }
-/* 모바일에서 사이드바(목차)가 자동으로 숨겨지는 걸 막고 항상 보여줌 */
+
+/* 1. 모바일에서 사이드바와 본문이 겹치는 문제 해결 */
     @media (max-width: 768px) {
+        /* 사이드바 강제 고정 및 너비 설정 */
         [data-testid="stSidebar"] {
             transform: none !important;
             visibility: visible !important;
             display: block !important;
-            width: 300px !important; /* 모바일에서 적절한 목차 너비 */
+            width: 200px !important; /* 모바일에서 목차 너비를 살짝 줄여서 공간 확보 */
+            position: fixed !important;
         }
-        /* 사이드바를 여닫는 화살표 버튼을 숨겨서 항상 열린 상태로 고정 */
-        [data-testid="collapsedControl"] {
+
+        /* 본문 영역을 사이드바 너비만큼 강제로 밀어냄 (겹침 방지 핵심) */
+        section.main {
+            margin-left: 200px !important;
+            min-width: 250px !important; /* 본문이 너무 찌그러지지 않게 최소 너비 설정 */
+        }
+
+        /* 2. 상단에 뜨는 ㅈ같은 텍스트 아이콘(화살표 글자) 숨기기 */
+        header[data-testid="stHeader"], [data-testid="collapsedControl"], .st-emotion-cache-1f8u604 {
             display: none !important;
+        }
+        
+        /* 본문 내부 카드 너비 조정 */
+        .report-card {
+            padding: 20px !important;
+            margin: 10px !important;
         }
     }
         </style>
