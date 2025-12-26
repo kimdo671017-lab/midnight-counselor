@@ -1838,47 +1838,36 @@ def main():
                 padding-top: 3.5rem !important;
             }
 
-/* 1. 숨겨진 진짜 버튼(collapsedControl) 강제 소환 */
+/* 사이드바 버튼 & 지저분한 글씨 정리 */
 [data-testid="collapsedControl"] {
-    display: block !important;        /* none을 block으로 덮어씀 */
-    visibility: visible !important;   /* 보이게 함 */
-    
-    /* 위치를 화면 왼쪽 위로 강제 고정 */
+    display: block !important;
+    visibility: visible !important;
     position: fixed !important;
     top: 15px !important;
     left: 15px !important;
-    
-    /* 크기 확보 */
     width: 40px !important;
     height: 40px !important;
+    z-index: 1000000 !important;
     
-    /* 다른 모든 요소보다 위에 오도록 (제일 중요) */
-    z-index: 1000000 !important; 
-    
-    /* 배경색을 줘서 눈에 띄게 만듦 */
     background-color: rgba(255, 255, 255, 0.2) !important;
     border-radius: 50% !important;
+
+    /* ★ 핵심: 원래 있던 글씨("keyboard...")를 투명하게 만들고 크기를 0으로 없애버림 */
+    color: transparent !important;
+    font-size: 0 !important; 
 }
 
-/* 2. 버튼 모양을 '☰' (햄버거 메뉴)로 강제 변경 */
-/* 기존 화살표 아이콘이 꼴보기 싫으시다고 했으니 텍스트로 덮어씌웁니다 */
-[data-testid="collapsedControl"]::before {
-    content: "☰" !important;    /* 메뉴 아이콘 */
-    font-size: 30px !important;
-    color: white !important;      /* 검은 배경이니 흰색 글씨 */
+/* 우리가 만든 깔끔한 '☰' 아이콘은 다시 글자 크기를 키워서 보여줌 */
+[data-testid="collapsedControl"]::after {
+    content: "☰" !important;
+    font-size: 24px !important; /* 다시 아이콘 크기 확보 */
+    color: white !important;    /* 아이콘 색상 (배경이 어두우면 white, 밝으면 black) */
     
-    /* 중앙 정렬 */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    height: 100% !important;
-}
-
-/* 3. (선택사항) 헷갈리게 하는 파란색 물음표[?] 이미지 숨기기 */
-/* 그 물음표가 뭔지 정확히 모르겠으나, 맨 위에 있는 이미지라면 이걸로 숨겨질 겁니다 */
-.stImage {
-    pointer-events: none !important; /* 이미지를 눌러도 확대 안 되게 막음 */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -55%) !important;
+    display: block !important;
 }
 
         </style>
