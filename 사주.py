@@ -1838,61 +1838,75 @@ def main():
                 padding-top: 3.5rem !important;
             }
 
-/* 모바일 레이아웃 교정 (PC 구조 + 토글 기능 복구) */
+/* 모바일 레이아웃 강제 교정 (PC 구조 + 토글 기능 정상화) */
 @media (max-width: 768px) {
-    
-    /* 1. 사이드바: '열려 있을 때만' 강제 고정 */
-    [data-testid="stSidebar"][aria-expanded="true"] {
+
+    /* 1. 사이드바 설정 (기본값) */
+    [data-testid="stSidebar"] {
         width: 150px !important;
         min-width: 150px !important;
-        position: fixed !important;
+        transition: margin-left 0.3s ease !important; /* 부드럽게 열리고 닫히기 */
         z-index: 9999 !important;
-        transform: none !important; /* 애니메이션 없이 딱 붙이기 */
-        visibility: visible !important;
     }
 
-    /* 2. 사이드바: '닫혀 있을 때'는 화면 밖으로 보내기 (안 그러면 잔상이 남음) */
+    /* 2. 사이드바가 '열려있을 때' ([aria-expanded="true"]) */
+    [data-testid="stSidebar"][aria-expanded="true"] {
+        transform: none !important;       /* 모바일 전용 애니메이션 제거 */
+        visibility: visible !important;   /* 보이게 하기 */
+        position: fixed !important;       /* 위치 고정 */
+        left: 0 !important;               /* 왼쪽 딱 붙이기 */
+        margin-left: 0 !important;
+    }
+
+    /* 3. 사이드바가 '닫혀있을 때' ([aria-expanded="false"]) */
+    /* 님 코드에서 이 부분이 visible !important로 되어 있어서 안 닫혔던 겁니다 */
     [data-testid="stSidebar"][aria-expanded="false"] {
-        width: 150px !important;
-        margin-left: -150px !important; /* 왼쪽으로 숨기기 */
+        margin-left: -150px !important;   /* 왼쪽 화면 밖으로 밀어버림 */
+        visibility: hidden !important;    /* 확실히 숨김 */
     }
 
-    /* 3. 토글 버튼(화살표) 부활 및 위치 조정 */
-    /* 기존에 display: none 했던 것을 풀어줘야 누를 수 있습니다 */
+    /* 4. 토글 버튼(화살표) 부활시키기 */
+    /* 님 코드에서 display: none 했던 걸 풀어야 닫을 수 있습니다 */
     [data-testid="collapsedControl"] {
         display: block !important;
-        left: 10px !important; /* 닫혔을 때 버튼 위치 */
+        position: fixed !important;
         top: 10px !important;
-        z-index: 10000 !important;
-        color: #000 !important; /* 혹시 아이콘 색 문제라면 강제 지정 */
+        left: 10px !important;
+        z-index: 100000 !important; /* 무엇보다 위에 있게 */
+        color: black !important; /* 잘 보이게 색상 강제 */
+        background: rgba(255,255,255,0.8); /* 배경 깔아서 글씨랑 안 겹치게 */
+        border-radius: 5px;
     }
-
-    /* 사이드바가 열려있을 때 버튼 위치를 사이드바 옆으로 이동 (선택사항) */
+    
+    /* 사이드바 열려있으면 버튼도 옆으로 같이 이동 */
     [data-testid="stSidebar"][aria-expanded="true"] + [data-testid="collapsedControl"],
-    [data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="collapsedControl"] {
+    body:has([data-testid="stSidebar"][aria-expanded="true"]) [data-testid="collapsedControl"] {
         left: 160px !important; 
     }
 
-    /* 4. 본문(Container): 사이드바가 '열려 있을 때만' 오른쪽으로 밀기 */
-    /* :has() 선택자는 '사이드바가 열린 상태를 가진 body'를 찾습니다 */
+    /* 5. 본문 내용 (PC처럼 밀고 당기기) */
+    /* 사이드바 열림 -> 본문 오른쪽으로 밀기 */
     body:has([data-testid="stSidebar"][aria-expanded="true"]) .main .block-container {
-        padding-left: 170px !important; /* 150px + 여유 20px */
+        padding-left: 170px !important; /* 사이드바 150px + 여백 20px */
         padding-right: 10px !important;
         max-width: 100% !important;
+        transition: padding-left 0.3s ease !important;
     }
 
-    /* 5. 본문: 사이드바가 '닫혀 있을 때'는 넓게 쓰기 */
+    /* 사이드바 닫힘 -> 본문 원상복구 */
     body:has([data-testid="stSidebar"][aria-expanded="false"]) .main .block-container {
-        padding-left: 1rem !important; /* 기본 패딩으로 복귀 */
-        padding-right: 1rem !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        max-width: 100% !important;
+        transition: padding-left 0.3s ease !important;
     }
 
-    /* 6. 헤더 등 불필요한 요소 숨김 (기존 유지) */
+    /* 6. 잡다한 헤더 숨김 (이건 유지) */
     .st-emotion-cache-1f8u604, header {
         display: none !important;
     }
     
-    /* 7. 카드 너비 보정 (기존 유지) */
+    /* 7. 카드 너비 (유지) */
     .report-card {
         width: 100% !important;
         padding: 15px !important;
