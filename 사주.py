@@ -1838,36 +1838,45 @@ def main():
                 padding-top: 3.5rem !important;
             }
 
-/* 사이드바 버튼 & 지저분한 글씨 정리 */
+/* 사이드바 버튼: '목차' 텍스트로 교체 */
 [data-testid="collapsedControl"] {
+    /* 1. 버튼 위치 및 기본 설정 */
     display: block !important;
-    visibility: visible !important;
     position: fixed !important;
     top: 15px !important;
     left: 15px !important;
-    width: 40px !important;
-    height: 40px !important;
     z-index: 1000000 !important;
     
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    border-radius: 50% !important;
-
-    /* ★ 핵심: 원래 있던 글씨("keyboard...")를 투명하게 만들고 크기를 0으로 없애버림 */
-    color: transparent !important;
-    font-size: 0 !important; 
+    /* 2. 기존의 이상한 영어 글씨("keyboard...") 강제로 숨기기 */
+    visibility: hidden !important; /* 부모를 숨김 */
+    
+    /* 3. 버튼 모양 (글자가 들어갈 배경) */
+    width: auto !important;         /* 글자 길이에 맞게 */
+    height: 34px !important;        /* 적당한 높이 */
+    background-color: rgba(255, 255, 255, 0.2) !important; /* 반투명 배경 */
+    border: 1px solid rgba(255, 255, 255, 0.3) !important; /* 얇은 테두리 */
+    border-radius: 12px !important; /* 둥근 모서리 */
+    padding: 0 12px !important;     /* 좌우 여백 */
 }
 
-/* 우리가 만든 깔끔한 '☰' 아이콘은 다시 글자 크기를 키워서 보여줌 */
+/* 4. '목차' 글씨 새로 새겨넣기 */
 [data-testid="collapsedControl"]::after {
-    content: "☰" !important;
-    font-size: 24px !important; /* 다시 아이콘 크기 확보 */
-    color: white !important;    /* 아이콘 색상 (배경이 어두우면 white, 밝으면 black) */
+    content: "목차" !important;    /* 여기에 원하는 단어 입력 */
     
+    /* 숨겨진 부모 속에서 이 녀석만 다시 보이게 함 */
+    visibility: visible !important; 
+    
+    /* 글자 스타일 */
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: #ffffff !important;      /* 흰색 글씨 */
+    
+    /* 버튼 중앙에 위치 잡기 */
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -55%) !important;
-    display: block !important;
+    transform: translate(-50%, -50%) !important;
+    white-space: nowrap !important; /* 줄바꿈 방지 */
 }
 
         </style>
