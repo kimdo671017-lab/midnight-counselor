@@ -1838,32 +1838,37 @@ def main():
                 padding-top: 3.5rem !important;
             }
 
-/* 1. 모바일에서 사이드바와 본문이 겹치는 문제 해결 */
+/* 모바일 레이아웃 강제 교정 (PC와 동일한 구조 구현) */
     @media (max-width: 768px) {
-        /* 사이드바 강제 고정 및 너비 설정 */
+        /* 1. 사이드바 강제 고정 및 너비 축소 (모바일 공간 확보) */
         [data-testid="stSidebar"] {
             transform: none !important;
             visibility: visible !important;
             display: block !important;
-            width: 200px !important; /* 모바일에서 목차 너비를 살짝 줄여서 공간 확보 */
+            width: 150px !important; /* 목차 너비를 150px로 줄여서 본문 공간 확보 */
+            min-width: 150px !important;
             position: fixed !important;
+            z-index: 100 !important;
         }
 
-        /* 본문 영역을 사이드바 너비만큼 강제로 밀어냄 (겹침 방지 핵심) */
-        section.main {
-            margin-left: 200px !important;
-            min-width: 250px !important; /* 본문이 너무 찌그러지지 않게 최소 너비 설정 */
+        /* 2. 본문 그릇(Container)을 오른쪽으로 확실히 밀어내기 (겹침 방지 핵심) */
+        .main .block-container {
+            padding-left: 170px !important; /* 사이드바 너비보다 20px 더 밀기 */
+            padding-right: 10px !important;
+            max-width: 100% !important;
         }
 
-        /* 2. 상단에 뜨는 ㅈ같은 텍스트 아이콘(화살표 글자) 숨기기 */
-        header[data-testid="stHeader"], [data-testid="collapsedControl"], .st-emotion-cache-1f8u604 {
+        /* 3. 상단에 뜨는 ㅈ같은 화살표 텍스트(아이콘 에러) 완전 삭제 */
+        [data-testid="collapsedControl"], .st-emotion-cache-1f8u604, header {
             display: none !important;
+            height: 0 !important;
         }
-        
-        /* 본문 내부 카드 너비 조정 */
+
+        /* 4. 본문 내부 카드 너비가 화면 밖으로 나가지 않게 조절 */
         .report-card {
-            padding: 20px !important;
-            margin: 10px !important;
+            width: 100% !important;
+            padding: 15px !important;
+            margin-left: 0 !important;
         }
     }
         </style>
